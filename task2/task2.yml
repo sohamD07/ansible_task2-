@@ -1,0 +1,19 @@
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+      - name: downloading httpd in ec2 instance
+        package:
+            name: "httpd"
+            state: present
+            
+      - name: copy html files to ec2 
+        copy:
+            dest: "/var/www/html/"
+            src: "/root/awsec2/index.html"
+
+      - name: starting service
+        service:
+            name: "httpd"
+            state: started
+            enabled: yes          
